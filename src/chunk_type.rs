@@ -1,12 +1,6 @@
 use std::{fmt::Display, str::FromStr};
 
-use thiserror::Error;
-
-#[derive(Debug, Error)]
-pub enum ChunkError {
-    #[error("invalid chunk type")]
-    InvalidChunkType,
-}
+use crate::chunk_err::ChunkError;
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct ChunkType {
