@@ -107,17 +107,12 @@ impl Chunk {
     }
 
     pub fn as_bytes(&self) -> Vec<u8> {
-        let length_bytes = self.length.to_be_bytes();
-        let chunk_type_bytes = self.chunk_type.data_bytes;
-        let data_bytes = &self.data;
-        let crc_bytes = self.crc.to_be_bytes();
+        let mut res_vec = Vec::with_capacity(12 + self.length as usize);
 
-        let mut res_vec = Vec::new();
-
-        res_vec.extend_from_slice(&length_bytes);
-        res_vec.extend_from_slice(&chunk_type_bytes);
-        res_vec.extend_from_slice(&data_bytes);
-        res_vec.extend_from_slice(&crc_bytes);
+        res_vec.extend_from_slice(&self.length.to_be_bytes());
+        res_vec.extend_from_slice(&self.chunk_type.data_bytes);
+        res_vec.extend_from_slice(&self.data);
+        res_vec.extend_from_slice(&self.crc.to_be_bytes());
 
         res_vec
     }
