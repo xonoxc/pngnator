@@ -4,12 +4,21 @@ use crc::{CRC_32_ISO_HDLC, Crc};
 
 use crate::{chunk_err::ChunkError, chunk_type::ChunkType};
 
-#[derive(Debug)]
+#[derive(Debug, Eq)]
 pub struct Chunk {
     length: u32,
-    chunk_type: ChunkType,
+    pub chunk_type: ChunkType,
     data: Vec<u8>,
     crc: u32,
+}
+
+impl PartialEq for Chunk {
+    fn eq(&self, other: &Self) -> bool {
+        self.length == other.length
+            && self.chunk_type == other.chunk_type
+            && self.data == other.data
+            && self.crc == other.crc
+    }
 }
 
 fn read_u32(bytes: &[u8]) -> Result<u32, ChunkError> {

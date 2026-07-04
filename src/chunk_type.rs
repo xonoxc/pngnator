@@ -2,7 +2,7 @@ use std::{fmt::Display, str::FromStr};
 
 use crate::chunk_err::ChunkError;
 
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct ChunkType {
     pub data_bytes: [u8; 4],
 }
@@ -85,6 +85,10 @@ impl ChunkType {
             [_, _, _, b'a'..=b'z'] => true,
             _ => false,
         };
+    }
+
+    pub fn as_str(&self) -> &str {
+        str::from_utf8(&self.data_bytes).unwrap()
     }
 }
 
